@@ -1,0 +1,102 @@
+{
+  "scenario_id": "SWE_001",
+
+  "scenario_name":
+    "Production Bug Before Release",
+
+  "target_icp": "software_engineer",
+
+  "objective": [
+    "technical_decision_making",
+    "collaboration"
+  ],
+
+  "start_node": "D1",
+
+  "nodes": [
+
+    {
+      "node_id": "D1",
+
+      "situation":
+      "Critical bug found 2 hours before release.",
+
+      "choices": [
+
+        {
+          "choice_id": "A",
+
+          "text":
+          "Inform team immediately",
+
+          "next_node": "D2A",
+
+          "score_delta": {
+            "collaboration": 5
+          }
+        },
+
+        {
+          "choice_id": "B",
+
+          "text":
+          "Hide issue and deploy",
+
+          "next_node": "D2B",
+
+          "score_delta": {
+            "technical_decision_making": -10
+          }
+        }
+      ]
+    },
+
+    {
+      "node_id": "D2A",
+
+      "situation":
+      "Team discusses options.",
+
+      "choices": [
+
+        {
+          "choice_id": "A1",
+
+          "text":
+          "Delay release",
+
+          "next_node":
+          "END_BEST",
+
+          "score_delta": {
+            "ownership": 10
+          }
+        }
+      ]
+    },
+
+    {
+      "node_id": "D2B",
+
+      "situation":
+      "Production outage occurs.",
+
+      "choices": [
+
+        {
+          "choice_id": "B1",
+
+          "text":
+          "Take responsibility",
+
+          "next_node":
+          "END_POOR",
+
+          "score_delta": {
+            "ownership": 2
+          }
+        }
+      ]
+    }
+  ]
+}

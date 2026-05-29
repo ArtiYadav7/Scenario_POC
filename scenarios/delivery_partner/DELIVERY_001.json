@@ -1,0 +1,85 @@
+{
+  "scenario_id": "DELIVERY_001",
+  "scenario_name": "Customer Cannot Find You",
+  "target_icp": "delivery_partner",
+  "objective": [
+    "communication",
+    "problem_solving"
+  ],
+  "start_node": "D1",
+
+  "nodes": [
+
+    {
+      "node_id": "D1",
+
+      "situation": "Customer says he cannot locate you.",
+
+      "choices": [
+
+        {
+          "choice_id": "A",
+          "text": "Call customer",
+
+          "next_node": "D2A",
+
+          "score_delta": {
+            "communication": 5,
+            "problem_solving": 3
+          }
+        },
+
+        {
+          "choice_id": "B",
+          "text": "Mark unavailable",
+
+          "next_node": "D2B",
+
+          "score_delta": {
+            "customer_satisfaction": -5
+          }
+        }
+      ]
+    },
+
+    {
+      "node_id": "D2A",
+
+      "situation": "Customer provides correct location.",
+
+      "choices": [
+
+        {
+          "choice_id": "A1",
+          "text": "Deliver politely",
+
+          "next_node": "END_BEST",
+
+          "score_delta": {
+            "professionalism": 10
+          }
+        }
+      ]
+    },
+
+    {
+      "node_id": "D2B",
+
+      "situation": "Customer becomes angry.",
+
+      "choices": [
+
+        {
+          "choice_id": "B1",
+          "text": "Apologize",
+
+          "next_node": "END_AVERAGE",
+
+          "score_delta": {
+            "communication": 2
+          }
+        }
+      ]
+    }
+  ]
+}
