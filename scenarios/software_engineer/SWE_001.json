@@ -1,14 +1,23 @@
 {
   "scenario_id": "SWE_001",
 
-  "scenario_name":
-    "Production Bug Before Release",
+  "scenario_name": "Production Bug Before Release",
 
   "target_icp": "software_engineer",
 
-  "objective": [
+  "role": "Software Engineer",
+
+  "industry": "Technology",
+
+  "difficulty": "Intermediate",
+
+  "estimated_duration": 10,
+
+  "learning_skills": [
     "technical_decision_making",
-    "collaboration"
+    "collaboration",
+    "ownership",
+    "communication"
   ],
 
   "start_node": "D1",
@@ -18,8 +27,10 @@
     {
       "node_id": "D1",
 
+      "state_type": "critical_bug_detected",
+
       "situation":
-      "Critical bug found 2 hours before release.",
+      "A critical production bug is discovered 2 hours before release. Fixing it may delay the launch.",
 
       "choices": [
 
@@ -27,11 +38,15 @@
           "choice_id": "A",
 
           "text":
-          "Inform team immediately",
+          "Inform the team immediately and discuss options",
+
+          "consequence":
+          "The team appreciates the transparency and starts evaluating risks.",
 
           "next_node": "D2A",
 
-          "score_delta": {
+          "competency_effects": {
+            "communication": 5,
             "collaboration": 5
           }
         },
@@ -40,12 +55,16 @@
           "choice_id": "B",
 
           "text":
-          "Hide issue and deploy",
+          "Ignore the issue and proceed with deployment",
+
+          "consequence":
+          "The release proceeds but the bug remains unresolved.",
 
           "next_node": "D2B",
 
-          "score_delta": {
-            "technical_decision_making": -10
+          "competency_effects": {
+            "technical_decision_making": -10,
+            "ownership": -5
           }
         }
       ]
@@ -54,8 +73,10 @@
     {
       "node_id": "D2A",
 
+      "state_type": "team_review",
+
       "situation":
-      "Team discusses options.",
+      "The team reviews the bug and confirms it can impact thousands of users.",
 
       "choices": [
 
@@ -63,13 +84,33 @@
           "choice_id": "A1",
 
           "text":
-          "Delay release",
+          "Delay the release and fix the issue",
 
-          "next_node":
-          "END_BEST",
+          "consequence":
+          "The bug is fixed before launch and users are protected.",
 
-          "score_delta": {
-            "ownership": 10
+          "next_node": "END_BEST",
+
+          "competency_effects": {
+            "ownership": 10,
+            "technical_decision_making": 8
+          }
+        },
+
+        {
+          "choice_id": "A2",
+
+          "text":
+          "Release with a temporary workaround",
+
+          "consequence":
+          "The release succeeds but some users experience minor issues.",
+
+          "next_node": "END_AVERAGE",
+
+          "competency_effects": {
+            "technical_decision_making": 3,
+            "ownership": 2
           }
         }
       ]
@@ -78,8 +119,10 @@
     {
       "node_id": "D2B",
 
+      "state_type": "production_outage",
+
       "situation":
-      "Production outage occurs.",
+      "The bug causes a production outage shortly after deployment.",
 
       "choices": [
 
@@ -87,16 +130,60 @@
           "choice_id": "B1",
 
           "text":
-          "Take responsibility",
+          "Take responsibility and coordinate the fix",
 
-          "next_node":
-          "END_POOR",
+          "consequence":
+          "The outage is resolved but trust has been affected.",
 
-          "score_delta": {
-            "ownership": 2
+          "next_node": "END_POOR",
+
+          "competency_effects": {
+            "ownership": 2,
+            "communication": 2
           }
         }
       ]
     }
+
+  ],
+
+  "outcomes": [
+
+    {
+      "outcome_id": "BEST",
+
+      "title": "Responsible Engineering Decision",
+
+      "description":
+      "You prioritized product stability and user trust over deadlines.",
+
+      "business_impact":
+      "Successful launch with no customer impact."
+    },
+
+    {
+      "outcome_id": "AVERAGE",
+
+      "title": "Managed Risk",
+
+      "description":
+      "The release succeeded but carried avoidable risk.",
+
+      "business_impact":
+      "Minor customer impact and follow-up work required."
+    },
+
+    {
+      "outcome_id": "POOR",
+
+      "title": "Production Incident",
+
+      "description":
+      "The unresolved bug caused a preventable outage.",
+
+      "business_impact":
+      "Customer complaints, incident review, and trust loss."
+    }
+
   ]
 }

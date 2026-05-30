@@ -4,21 +4,45 @@
 
 This project is a Proof of Concept (POC) for Vidya v3 Scenario-Based Learning.
 
-The objective is to simulate real-world workplace situations where learners make decisions, experience consequences, receive scores, and get feedback.
+The goal is to simulate real-world workplace situations where learners make decisions, experience consequences, develop competencies, and receive outcome-based feedback.
 
-Unlike quizzes, every learner choice changes the scenario path and outcome.
+Unlike traditional quizzes, learner choices directly influence scenario states, outcomes, and competency development.
 
 ---
 
-## Features
+## Core Learning Flow
 
-- Branching scenario engine
-- Multiple decision points
-- Consequence-driven learning
-- ICP-specific scenarios
-- Scoring framework
-- JSON-based scenario definitions
-- FastAPI backend
+```text
+Scenario
+    ↓
+State
+    ↓
+Decision
+    ↓
+Consequence
+    ↓
+Competency Effects
+    ↓
+Outcome
+    ↓
+Debrief
+```
+
+Each learner can reach different outcomes based on their decisions.
+
+---
+
+## Key Features
+
+* State-based scenario architecture
+* Branching decision trees
+* Consequence-driven learning
+* Competency-based scoring
+* Multiple ICP support
+* Outcome-driven debriefs
+* JSON scenario definitions
+* FastAPI backend
+* Future-ready for AI Tutor integration
 
 ---
 
@@ -28,6 +52,7 @@ Unlike quizzes, every learner choice changes the scenario path and outcome.
 Scenario_POC/
 │
 ├── app.py
+├── prompt.py
 ├── requirements.txt
 ├── README.md
 │
@@ -39,6 +64,7 @@ Scenario_POC/
 │   └── evaluator.py
 │
 └── scenarios/
+    │
     ├── delivery_partner/
     │   └── DELIVERY_001.json
     │
@@ -48,41 +74,139 @@ Scenario_POC/
 
 ---
 
-## Scenario Structure
+## Scenario Architecture
 
-Each scenario follows:
+Each scenario contains:
 
 ```json
 {
   "scenario_id": "",
   "scenario_name": "",
   "target_icp": "",
-  "objective": [],
+  "role": "",
+  "industry": "",
+  "difficulty": "",
+  "estimated_duration": 0,
+  "learning_skills": [],
   "start_node": "",
-  "nodes": []
+  "nodes": [],
+  "outcomes": []
 }
 ```
 
-Each node contains:
+---
+
+## State Schema
+
+Each node represents a learning state.
 
 ```json
 {
   "node_id": "",
+  "state_type": "",
   "situation": "",
   "choices": []
 }
 ```
 
-Each choice contains:
+Examples:
+
+* customer_confused
+* customer_angry
+* customer_recovered
+* critical_bug_detected
+* production_outage
+* team_review
+
+State types allow future analytics, mastery tracking, and learner-state integration.
+
+---
+
+## Choice Schema
 
 ```json
 {
   "choice_id": "",
   "text": "",
+  "consequence": "",
   "next_node": "",
-  "score_delta": {}
+  "competency_effects": {}
 }
 ```
+
+Example:
+
+```json
+{
+  "choice_id": "A",
+  "text": "Call customer",
+  "consequence": "Customer shares correct location.",
+  "next_node": "D2A",
+  "competency_effects": {
+    "communication": 5,
+    "problem_solving": 3
+  }
+}
+```
+
+---
+
+## Outcome Schema
+
+```json
+{
+  "outcome_id": "",
+  "title": "",
+  "description": "",
+  "business_impact": ""
+}
+```
+
+Example:
+
+```json
+{
+  "outcome_id": "BEST",
+  "title": "Positive Customer Experience",
+  "description": "Customer received order successfully.",
+  "business_impact": "5-star rating"
+}
+```
+
+---
+
+## Competency Framework
+
+### Universal Competencies
+
+Used across all ICPs.
+
+* Communication
+* Problem Solving
+* Professionalism
+* Critical Thinking
+* Ownership
+
+### ICP-Specific Competencies
+
+Delivery Partner
+
+* Customer Satisfaction
+
+Software Engineer
+
+* Technical Decision Making
+* Collaboration
+
+Sales Representative
+
+* Objection Handling
+* Negotiation
+
+Customer Support
+
+* Conflict Resolution
+* Empathy
 
 ---
 
@@ -96,43 +220,85 @@ Target ICP:
 Delivery Partner
 
 Skills:
-- Communication
-- Problem Solving
-- Professionalism
-- Customer Satisfaction
+
+* Communication
+* Problem Solving
+* Professionalism
+* Customer Satisfaction
+
+Possible Outcomes:
+
+* BEST
+* AVERAGE
+* POOR
 
 ---
 
 ### SWE_001
 
-Software Engineer Workplace Scenario
+Production Bug Before Release
 
 Target ICP:
 Software Engineer
 
 Skills:
-- Communication
-- Ownership
-- Problem Solving
-- Professionalism
+
+* Technical Decision Making
+* Collaboration
+* Ownership
+* Communication
+
+Possible Outcomes:
+
+* BEST
+* AVERAGE
+* POOR
+
+---
+
+## Evaluation Engine
+
+The evaluator tracks competency growth throughout the scenario.
+
+Example:
+
+```json
+{
+  "communication": 8,
+  "problem_solving": 5,
+  "professionalism": 10
+}
+```
+
+Final evaluation generates:
+
+```json
+{
+  "outcome": "BEST",
+  "final_score": 23,
+  "strengths": [],
+  "improvements": [],
+  "summary": ""
+}
+```
 
 ---
 
 ## Run Locally
 
-Install dependencies:
+Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Start FastAPI:
+Start FastAPI
 
 ```bash
 uvicorn app:app --reload
 ```
 
-Swagger Docs:
+Open Swagger
 
 ```text
 http://127.0.0.1:8000/docs
@@ -160,16 +326,56 @@ GET /scenario/SWE_001
 
 ---
 
-## Future Improvements
+## Future API Design
 
-- Scenario state management
-- LLM-generated consequences
-- Dynamic branching
-- AI tutor feedback
-- Scoring dashboard
-- Learner mastery integration
-- Layer A integration
-- Event capture integration
+### Start Scenario
+
+```http
+POST /scenario/start
+```
+
+### Submit Choice
+
+```http
+POST /scenario/choice
+```
+
+### Get Result
+
+```http
+GET /scenario/result
+```
+
+---
+
+## Future Enhancements
+
+### Scenario Engine
+
+* Dynamic branching
+* Scenario state persistence
+* Session management
+
+### Learning Science
+
+* Competency mastery tracking
+* Personalized remediation
+* Difficulty adaptation
+
+### AI Layer
+
+* AI-generated debriefs
+* Tutor feedback generation
+* Reflection questions
+* Coaching recommendations
+
+### Vidya Integration
+
+* Learner State Service
+* Mastery Tracking
+* Roadmap Generation
+* Event Capture
+* Analytics Layer
 
 ---
 
@@ -177,13 +383,57 @@ GET /scenario/SWE_001
 
 This POC aligns with:
 
-- Scenario Learning Framework
-- ICP-specific personalization
-- Decision-based learning
-- State-Out event capture
-- Future Learner State integration
+### Layer A — Learner State
+
+Future competency mastery integration.
+
+### Layer B — Learning Engine
+
+Scenario-based workplace simulations.
+
+### Layer C — State-Out
+
+Decision events and competency outcomes.
+
+```text
+Learner
+    ↓
+Decision
+    ↓
+Consequence
+    ↓
+Competency Update
+    ↓
+Outcome
+    ↓
+Debrief
+```
+
+---
+
+## Current Status
+
+Completed:
+
+* Scenario Architecture
+* State-Based Design
+* Branching Logic
+* Competency Tracking
+* Outcome Modeling
+* Evaluation Engine
+* FastAPI Integration
+* Multiple ICP Support
+
+Planned:
+
+* Scenario Sessions
+* Choice APIs
+* Result APIs
+* AI Debriefs
+* Mastery Tracking
 
 ---
 
 # Author
+
 Arti Yadav

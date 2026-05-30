@@ -55,7 +55,7 @@ def process_choice(
             return {
                 "consequence": choice["consequence"],
                 "next_node": choice["next_node"],
-                "score_delta": choice["score_delta"]
+                "competency_effects": choice["competency_effects"]
             }
 
     return None
@@ -66,6 +66,6 @@ def is_end_node(node_id):
     Check if scenario ended
     """
 
-    return node_id.startswith("END")
+    return node_id.upper().startswith("END")
 
     

@@ -1,12 +1,12 @@
 def update_scores(
         current_scores,
-        score_delta
+        competency_effects
 ):
     """
     Update learner scores
     """
 
-    for metric, value in score_delta.items():
+    for metric, value in competency_effects.items():
 
         current_scores[metric] = (
             current_scores.get(metric, 0)
@@ -25,18 +25,14 @@ def calculate_final_score(scores):
 
 
 def get_outcome(final_score):
-    """
-    Determine outcome
-    """
 
-    if final_score >= 20:
+    if final_score >= 25:
         return "BEST"
 
     elif final_score >= 10:
         return "AVERAGE"
 
-    else:
-        return "POOR"
+    return "POOR"
 
 
 def generate_debrief(scores):
@@ -49,7 +45,7 @@ def generate_debrief(scores):
 
     for metric, value in scores.items():
 
-        if value >= 5:
+        if value >= 8:
             strengths.append(metric)
 
         elif value < 0:

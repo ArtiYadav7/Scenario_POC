@@ -15,7 +15,7 @@ class Choice(BaseModel):
 
     next_node: str
 
-    score_delta: Dict[str, int]
+    competency_effects: Dict[str, int]
 
 
 class Node(BaseModel):
@@ -24,25 +24,39 @@ class Node(BaseModel):
     """
 
     node_id: str
+     
+    state_type: str
 
     situation: str
 
     choices: List[Choice]
 
+class Outcome(BaseModel):
+    outcome_id: str
+    title: str
+    description: str
+    business_impact: str    
+
 
 class Scenario(BaseModel):
-    """
-    Complete scenario definition.
-    """
-
     scenario_id: str
 
     scenario_name: str
 
     target_icp: str
 
-    learning_objective: List[str]
+    role: str
+
+    industry: str
+
+    difficulty: str # beginner/intermediate/advanced
+
+    estimated_duration: int
+
+    learning_skills: List[str]
 
     start_node: str
 
     nodes: List[Node]
+
+    outcomes: List[Outcome]

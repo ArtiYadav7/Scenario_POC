@@ -1,3 +1,13 @@
+"""
+Future use:
+
+Generate AI-powered debriefs
+using GPT/Groq/Llama.
+
+Currently not used in POC.
+"""
+
+
 def build_debrief_prompt(
     scenario_name,
     outcome,

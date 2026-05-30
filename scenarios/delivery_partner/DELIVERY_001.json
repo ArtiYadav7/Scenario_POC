@@ -1,11 +1,24 @@
 {
   "scenario_id": "DELIVERY_001",
+
   "scenario_name": "Customer Cannot Find You",
+
   "target_icp": "delivery_partner",
-  "objective": [
+
+  "role": "Delivery Partner",
+
+  "industry": "Logistics",
+
+  "difficulty": "Beginner",
+
+  "estimated_duration": 7,
+
+  "learning_skills": [
     "communication",
-    "problem_solving"
+    "problem_solving",
+    "professionalism"
   ],
+
   "start_node": "D1",
 
   "nodes": [
@@ -13,17 +26,22 @@
     {
       "node_id": "D1",
 
-      "situation": "Customer says he cannot locate you.",
+      "state_type": "customer_confused",
+
+      "situation": "Customer calls and says he cannot locate you. The order is already delayed by 5 minutes.",
 
       "choices": [
 
         {
           "choice_id": "A",
-          "text": "Call customer",
+
+          "text": "Call customer and confirm location",
+
+          "consequence": "Customer shares correct landmark and becomes cooperative.",
 
           "next_node": "D2A",
 
-          "score_delta": {
+          "competency_effects": {
             "communication": 5,
             "problem_solving": 3
           }
@@ -31,55 +49,138 @@
 
         {
           "choice_id": "B",
-          "text": "Mark unavailable",
+
+          "text": "Mark customer unavailable",
+
+          "consequence": "Customer becomes frustrated and contacts support.",
 
           "next_node": "D2B",
 
-          "score_delta": {
-            "customer_satisfaction": -5
+          "competency_effects": {
+            "communication": -3,
+            "professionalism": -2
           }
         }
+
       ]
     },
 
     {
       "node_id": "D2A",
 
-      "situation": "Customer provides correct location.",
+      "state_type": "customer_recovered",
+
+      "situation": "Customer gives the correct location and is waiting outside.",
 
       "choices": [
 
         {
           "choice_id": "A1",
-          "text": "Deliver politely",
+
+          "text": "Deliver order politely and apologize for delay",
+
+          "consequence": "Customer appreciates the effort.",
 
           "next_node": "END_BEST",
 
-          "score_delta": {
-            "professionalism": 10
+          "competency_effects": {
+            "professionalism": 10,
+            "communication": 3
+          }
+        },
+
+        {
+          "choice_id": "A2",
+
+          "text": "Deliver order without speaking",
+
+          "consequence": "Customer receives order but experience feels cold.",
+
+          "next_node": "END_AVERAGE",
+
+          "competency_effects": {
+            "professionalism": 2
           }
         }
+
       ]
     },
 
     {
       "node_id": "D2B",
 
-      "situation": "Customer becomes angry.",
+      "state_type": "customer_angry",
+
+      "situation": "Customer is angry because delivery was marked unavailable.",
 
       "choices": [
 
         {
           "choice_id": "B1",
-          "text": "Apologize",
+
+          "text": "Apologize and attempt redelivery",
+
+          "consequence": "Customer calms down but remains slightly unhappy.",
 
           "next_node": "END_AVERAGE",
 
-          "score_delta": {
-            "communication": 2
+          "competency_effects": {
+            "communication": 2,
+            "problem_solving": 2
+          }
+        },
+
+        {
+          "choice_id": "B2",
+
+          "text": "Argue with customer",
+
+          "consequence": "Customer raises a complaint.",
+
+          "next_node": "END_POOR",
+
+          "competency_effects": {
+            "communication": -5,
+            "professionalism": -5
           }
         }
+
       ]
     }
+
+  ],
+
+  "outcomes": [
+
+    {
+      "outcome_id": "BEST",
+
+      "title": "Positive Customer Experience",
+
+      "description": "Customer received order successfully and appreciated your communication.",
+
+      "business_impact": "5-star rating"
+    },
+
+    {
+      "outcome_id": "AVERAGE",
+
+      "title": "Issue Resolved",
+
+      "description": "Order completed but customer experience could be improved.",
+
+      "business_impact": "Neutral rating"
+    },
+
+    {
+      "outcome_id": "POOR",
+
+      "title": "Customer Complaint",
+
+      "description": "Customer escalated the issue to support.",
+
+      "business_impact": "Support escalation"
+    }
+
   ]
 }
