@@ -73,6 +73,26 @@ Scenario_POC/
 ```
 
 ---
+## Scenario Lifecycle
+
+Scenario Loaded
+↓
+State Presented
+↓
+Learner Chooses Action
+↓
+Consequence Applied
+↓
+Competencies Updated
+↓
+Next State Loaded
+↓
+Outcome Determined
+↓
+Debrief Generated
+
+The learner progresses through a branching decision tree where each choice updates competency scores and influences the final outcome.
+
 
 ## Scenario Architecture
 
@@ -172,6 +192,25 @@ Example:
   "business_impact": "5-star rating"
 }
 ```
+## Outcome Calculation Logic
+
+Each learner choice contributes competency effects.
+
+Example:
+
+Communication +5
+Problem Solving +3
+Professionalism +10
+
+The evaluator aggregates all competency values into a final score.
+
+Current POC Logic:
+
+* BEST → Score ≥ 20
+* AVERAGE → Score ≥ 10 and < 20
+* POOR → Score < 10
+
+Future versions may use weighted competencies, critical failure paths, and mastery-based evaluation.
 
 ---
 
@@ -408,6 +447,27 @@ Outcome
     ↓
 Debrief
 ```
+## Future Event Model
+
+Every learner interaction can be stored as an event.
+
+Example:
+
+{
+"event_type": "choice_selected",
+"scenario_id": "DELIVERY_001",
+"state_type": "customer_confused",
+"choice_id": "A",
+"timestamp": "2026-05-30T10:30:00Z"
+}
+
+This enables:
+
+* Learning analytics
+* Competency mastery tracking
+* AI coaching
+* Personalized recommendations
+* Scenario performance insights
 
 ---
 
@@ -431,6 +491,7 @@ Planned:
 * Result APIs
 * AI Debriefs
 * Mastery Tracking
+
 
 ---
 

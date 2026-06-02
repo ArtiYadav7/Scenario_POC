@@ -11,6 +11,8 @@ class Choice(BaseModel):
 
     text: str
 
+    reflection: str
+
     consequence: str
 
     next_node: str

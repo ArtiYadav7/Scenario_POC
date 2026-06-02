@@ -51,11 +51,15 @@ def process_choice(
     for choice in node["choices"]:
 
         if choice["choice_id"] == selected_choice_id:
-
+            print("CHOICE DATA =", choice)
+            print("REFLECTION =", choice.get("reflection"))
             return {
+                "choice_text":choice["text"],
                 "consequence": choice["consequence"],
                 "next_node": choice["next_node"],
-                "competency_effects": choice["competency_effects"]
+                "competency_effects": choice["competency_effects"],
+                "reflection": choice.get("reflection",
+        "No reflection available.")
             }
 
     return None
@@ -68,4 +72,18 @@ def is_end_node(node_id):
 
     return node_id.upper().startswith("END")
 
-    
+def get_outcome_by_id(
+        scenario,
+        outcome_id
+):
+    """
+    Fetch outcome details
+    """
+
+    for outcome in scenario["outcomes"]:
+
+        if outcome["outcome_id"] == outcome_id:
+
+            return outcome
+
+    return None    

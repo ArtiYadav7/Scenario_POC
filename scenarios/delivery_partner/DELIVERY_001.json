@@ -39,6 +39,8 @@
 
           "consequence": "Customer shares correct landmark and becomes cooperative.",
 
+          "reflection": "Proactively contacting the customer helps resolve ambiguity quickly and improves customer trust.",
+
           "next_node": "D2A",
 
           "competency_effects": {
@@ -53,6 +55,8 @@
           "text": "Mark customer unavailable",
 
           "consequence": "Customer becomes frustrated and contacts support.",
+
+          "reflection": "Avoiding communication may save time initially but often increases customer dissatisfaction and escalations.",
 
           "next_node": "D2B",
 
@@ -81,6 +85,8 @@
 
           "consequence": "Customer appreciates the effort.",
 
+          "reflection": "Taking ownership and communicating respectfully often improves customer experience even when delays occur.",
+
           "next_node": "END_BEST",
 
           "competency_effects": {
@@ -95,6 +101,8 @@
           "text": "Deliver order without speaking",
 
           "consequence": "Customer receives order but experience feels cold.",
+
+          "reflection": "Task completion is important, but customer interactions also influence overall service quality.",
 
           "next_node": "END_AVERAGE",
 
@@ -122,6 +130,8 @@
 
           "consequence": "Customer calms down but remains slightly unhappy.",
 
+          "reflection": "Recovering from mistakes quickly can reduce negative impact and rebuild trust.",
+
           "next_node": "END_AVERAGE",
 
           "competency_effects": {
@@ -136,6 +146,8 @@
           "text": "Argue with customer",
 
           "consequence": "Customer raises a complaint.",
+
+          "reflection": "Escalating conflict usually damages customer relationships and business outcomes.",
 
           "next_node": "END_POOR",
 
